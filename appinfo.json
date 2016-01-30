@@ -3,15 +3,28 @@
     "capabilities": [
         ""
     ],
-    "companyName": "Fresh-Money",
-    "longName": "Team Fresh-Money",
+    "companyName": "warman1001@gmail.com",
+    "longName": "WatchApp Learning Slate",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/icon-save.png",
+                "name": "test_image_save_icon",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/ZeroDup-icon.png",
+                "name": "menu_icon_up",
+                "targetPlatforms": null,
+                "type": "png"
+            }
+        ]
     },
     "sdkVersion": "3",
-    "shortName": "testing",
-    "uuid": "15b73ead-602d-4123-bab1-043d570e9943",
+    "shortName": "WatchApp Learning Slate",
+    "uuid": "5604c8fb-d172-4227-8210-17e5056eb3aa",
     "versionLabel": "1.0",
     "watchapp": {
         "watchface": false
