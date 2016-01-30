@@ -1,11 +1,11 @@
 #include <pebble.h>
 
 static Window *s_main_window;
-static Window *s_second_window;
+//static Window *s_second_window;
 static TextLayer *s_output_layer;
 static ActionBarLayer *action_bar;
-static GBitmap *menu_icon_up;
-static TextLayer *s_header_layer;
+static GBitmap *menu_daily_up, *menu_stats_select, *menu_settings_down;
+//static TextLayer *s_header_layer;
 
 
 
@@ -44,28 +44,17 @@ static void main_window_load(Window *window) {
   //Set the Click Config Provider
   action_bar_layer_set_click_config_provider(action_bar, click_config_provider);
   
-  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_UP, menu_icon_up, true);
+  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_UP, menu_daily_up, true);
+  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_SELECT, menu_stats_select, true);
+  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_DOWN, menu_settings_down, true);
     
   s_output_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
   text_layer_set_font(s_output_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
   text_layer_set_background_color(s_output_layer, GColorClear);
-  text_layer_set_text(s_output_layer, "Drink Counter");
+  text_layer_set_text(s_output_layer, "Press a Button");
   text_layer_set_text_alignment(s_output_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
   
   layer_add_child(window_layer, text_layer_get_layer(s_output_layer));
-
-  //action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_DOWN, test_image_menu, true)
-  
-
-  
-  /*
-  s_output_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
-  text_layer_set_font(s_output_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
-  text_layer_set_text(s_output_layer, "No button pressed yet.");
-  text_layer_set_overflow_mode(s_output_layer, GTextOverflowModeWordWrap);
-  */
-  //action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_UP, my_icon_previous, true);
-  //action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_DOWN, my_icon_next, true);
 }
 
 static void main_window_unload(Window *window) {
@@ -73,7 +62,9 @@ static void main_window_unload(Window *window) {
 }
 
 static void init() {
- menu_icon_up = gbitmap_create_with_resource(RESOURCE_ID_menu_icon_up);
+ menu_daily_up = gbitmap_create_with_resource(RESOURCE_ID_menu_daily_up);
+ menu_stats_select = gbitmap_create_with_resource(RESOURCE_ID_menu_stats_select);
+ menu_settings_down = gbitmap_create_with_resource(RESOURCE_ID_menu_settings_down);
   
   s_main_window = window_create();
   window_set_window_handlers(s_main_window, (WindowHandlers) {
