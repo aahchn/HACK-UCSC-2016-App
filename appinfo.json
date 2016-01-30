@@ -1,0 +1,19 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "bennettrjuggler@cs.com",
+    "longName": "testing",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "testing",
+    "uuid": "15b73ead-602d-4123-bab1-043d570e9943",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
