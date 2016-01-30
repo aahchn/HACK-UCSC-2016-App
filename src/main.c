@@ -1,39 +1,32 @@
 #include <pebble.h>
 
 static Window *s_main_window;
-//static Window *s_second_window;
 static TextLayer *s_output_layer;
 static ActionBarLayer *action_bar;
 static GBitmap *menu_daily_up, *menu_stats_select, *menu_settings_down;
-//static TextLayer *s_header_layer;
-
-
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(s_output_layer, "You Pressed the Up Button");
-  
-  
+  text_layer_set_text(s_output_layer, "Daily Progress");
 }
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(s_output_layer, "You Pressed the Select Button");
+  text_layer_set_text(s_output_layer, "Statistics");
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(s_output_layer, "You Pressed the Down Button");
+  text_layer_set_text(s_output_layer, "Settings");
 }
 
 static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
   window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
-  
-  
 }
 
 static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect window_bounds = layer_get_bounds(window_layer);
+  window_set_background_color(s_main_window, GColorMalachite);
 
   action_bar = action_bar_layer_create();
   action_bar_layer_add_to_window(action_bar, s_main_window);
@@ -66,7 +59,6 @@ static void init() {
     .load = main_window_load,
     .unload = main_window_unload
   });
-  //s_second_window = window_create();
   window_set_click_config_provider(s_main_window, click_config_provider);
   window_stack_push(s_main_window, true);
 }
