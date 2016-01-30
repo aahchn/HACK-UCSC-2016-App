@@ -35,13 +35,8 @@ static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect window_bounds = layer_get_bounds(window_layer);
 
-  //GRect window_bounds = layer_get_bounds(window_layer);
-
-  //Make the Action Bar
   action_bar = action_bar_layer_create();
-  //Associates the Action Bar to the Window
   action_bar_layer_add_to_window(action_bar, s_main_window);
-  //Set the Click Config Provider
   action_bar_layer_set_click_config_provider(action_bar, click_config_provider);
   
   action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_UP, menu_daily_up, true);
