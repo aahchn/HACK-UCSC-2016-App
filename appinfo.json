@@ -9,32 +9,26 @@
     "resources": {
         "media": [
             {
-                "file": "images/FACE.png",
-                "name": "MOAR",
-                "targetPlatforms": null,
-                "type": "bitmap"
-            },
-            {
-                "file": "images/stats.png",
-                "name": "menu_stats_select",
+                "file": "images/music_icon_ellipsis.png",
+                "name": "ELLIPSIS",
                 "targetPlatforms": null,
                 "type": "bitmap"
             },
             {
                 "file": "images/profile.png",
-                "name": "menu_profile_down",
-                "targetPlatforms": null,
-                "type": "bitmap"
-            },
-            {
-                "file": "images/ellipsis.png",
-                "name": "ellipsis",
+                "name": "menu_settings_down",
                 "targetPlatforms": null,
                 "type": "bitmap"
             },
             {
                 "file": "images/daily.png",
                 "name": "menu_daily_up",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/statistics.png",
+                "name": "menu_stats_select",
                 "targetPlatforms": null,
                 "type": "bitmap"
             }
