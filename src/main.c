@@ -2,10 +2,14 @@
 
 #include "windows/time_of_day.h"
 
-static Window *s_main_window, *s_statistics_window, *s_settings_window;
-static TextLayer *s_output_layer, *s_statistics_layer, *s_settings_layer;
+//TODO: Create staticstics and profile page
+
+static Window *s_main_window;
+static TextLayer *s_output_layer;
+
 static ActionBarLayer *action_bar, *mood_select_bar;
-static GBitmap *menu_daily_up, *menu_stats_select, *menu_settings_down;
+static GBitmap *s_menu_daily_up, *s_menu_stats_select, *s_menu_profile_down;
+
 static const bool animated = true;
 static GBitmap *s_ellipsis_bitmap;
 
@@ -21,8 +25,8 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(s_output_layer, "Settings");
-  window_stack_push(s_settings_window, animated);
+  text_layer_set_text(s_output_layer, "Profile");
+  window_stack_push(s_profile_window, animated);
 }
 
 static void mood_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -50,9 +54,9 @@ static void main_window_load(Window *window) {
   action_bar_layer_add_to_window(action_bar, s_main_window);
   action_bar_layer_set_click_config_provider(action_bar, click_config_provider);
   
-  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_UP, menu_daily_up, true);
-  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_SELECT, menu_stats_select, true);
-  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_DOWN, menu_settings_down, true);
+  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_UP, s_menu_daily_up, true);
+  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_SELECT, s_menu_stats_select, true);
+  action_bar_layer_set_icon_animated(action_bar, BUTTON_ID_DOWN, s_menu_profile_down, true);
     
   s_output_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
   text_layer_set_font(s_output_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
@@ -109,32 +113,32 @@ static void menu_statistics_window_unload(Window *window) {
   text_layer_destroy(s_statistics_layer);
 }
 
-static void menu_settings_window_load(Window *window) {
+static void menu_profile_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect window_bounds = layer_get_bounds(window_layer);
-  window_set_background_color(s_settings_window, GColorRed);
+  window_set_background_color(s_profile_window, GColorRed);
 
-  s_settings_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
-  text_layer_set_font(s_settings_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
-  text_layer_set_background_color(s_settings_layer, GColorClear);
-  text_layer_set_text(s_settings_layer, "THIS IS THE SETTINGS");
-  text_layer_set_text_alignment(s_settings_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
+  s_profile_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
+  text_layer_set_font(s_profile_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
+  text_layer_set_background_color(s_profile_layer, GColorClear);
+  text_layer_set_text(s_profile_layer, "THIS IS THE PROFILE");
+  text_layer_set_text_alignment(s_profile_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
   
-  layer_add_child(window_layer, text_layer_get_layer(s_settings_layer));
+  layer_add_child(window_layer, text_layer_get_layer(s_profile_layer));
 }
 
-static void menu_settings_window_unload(Window *window) {
-  text_layer_destroy(s_settings_layer);
+static void menu_profile_window_unload(Window *window) {
+  text_layer_destroy(s_profile_layer);
 }
 
 /********************* APP *****************************/
 
 static void init() {
- menu_daily_up = gbitmap_create_with_resource(RESOURCE_ID_menu_daily_up);
- menu_stats_select = gbitmap_create_with_resource(RESOURCE_ID_menu_stats_select);
- menu_settings_down = gbitmap_create_with_resource(RESOURCE_ID_menu_settings_down);
- s_ellipsis_bitmap = gbitmap_create_with_resource(RESOURCE_ID_ELLIPSIS);
-  
+	menu_time_of_day_up = gbitmap_create_with_resource(RESOURCE_ID_menu_daily_up);
+	s_menu_stats_select = gbitmap_create_with_resource(RESOURCE_ID_menu_stats_select);
+	s_menu_profile_down = gbitmap_create_with_resource(RESOURCE_ID_menu_profile_down);
+	s_ellipsis_bitmap = gbitmap_create_with_resource(RESOURCE_ID_ELLIPSIS);
+	
   s_main_window = window_create();
   window_set_click_config_provider(s_main_window, click_config_provider);
   window_set_window_handlers(s_main_window, (WindowHandlers) {
@@ -157,10 +161,10 @@ static void init() {
     .unload = menu_statistics_window_unload,
   });
   
-  s_settings_window = window_create();
-  window_set_window_handlers(s_settings_window, (WindowHandlers) {
-    .load = menu_settings_window_load,
-    .unload = menu_settings_window_unload,
+  s_profile_window = window_create();
+  window_set_window_handlers(s_profile_window, (WindowHandlers) {
+    .load = menu_profile_window_load,
+    .unload = menu_profile_window_unload,
   });
 }
 
