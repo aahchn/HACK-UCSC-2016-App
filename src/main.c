@@ -20,7 +20,7 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
 }
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-	text_layer_set_text(s_output_layer, "Statistics");
+	text_layer_set_text(s_output_layer, "Stats");
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -64,22 +64,22 @@ static void main_window_unload(Window *window) {
 static void menu_daily_window_load(Window *window) {
 }
 
-static void menu_statistics_window_load(Window *window) {
+static void menu_stats_window_load(Window *window) {
 	Layer *window_layer = window_get_root_layer(window);
 	GRect window_bounds = layer_get_bounds(window_layer);
-	window_set_background_color(s_statistics_window, GColorPurple);
+	window_set_background_color(s_stats_window, GColorPurple);
 
-	s_statistics_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
-	text_layer_set_font(s_statistics_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
-	text_layer_set_background_color(s_statistics_layer, GColorClear);
-	text_layer_set_text(s_statistics_layer, "THIS IS THE STATS");
-	text_layer_set_text_alignment(s_statistics_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
+	s_stats_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
+	text_layer_set_font(s_stats_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
+	text_layer_set_background_color(s_stats_layer, GColorClear);
+	text_layer_set_text(s_stats_layer, "THIS IS THE STATS");
+	text_layer_set_text_alignment(s_stats_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
 	
-	layer_add_child(window_layer, text_layer_get_layer(s_statistics_layer));
+	layer_add_child(window_layer, text_layer_get_layer(s_stats_layer));
 }
 
-static void menu_statistics_window_unload(Window *window) {
-	text_layer_destroy(s_statistics_layer);
+static void menu_stats_window_unload(Window *window) {
+	text_layer_destroy(s_stats_layer);
 }
 
 static void menu_profile_window_load(Window *window) {
@@ -116,10 +116,10 @@ static void init() {
 	
 	window_stack_push(s_main_window, animated);
 	
-	s_statistics_window = window_create();
-	window_set_window_handlers(s_statistics_window, (WindowHandlers) {
-		.load = menu_statistics_window_load,
-		.unload = menu_statistics_window_unload,
+	s_stats_window = window_create();
+	window_set_window_handlers(s_stats_window, (WindowHandlers) {
+		.load = menu_stats_window_load,
+		.unload = menu_stats_window_unload,
 	});
 	
 	s_profile_window = window_create();

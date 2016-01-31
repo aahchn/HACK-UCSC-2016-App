@@ -27,7 +27,7 @@
                 "type": "bitmap"
             },
             {
-                "file": "images/statistics.png",
+                "file": "images/stats.png",
                 "name": "menu_stats_select",
                 "targetPlatforms": null,
                 "type": "bitmap"
