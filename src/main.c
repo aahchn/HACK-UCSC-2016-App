@@ -2,6 +2,7 @@
 
 #include "windows/time_of_day.h"
 #include "windows/stats.h"
+#include "windows/profile.h"
 
 //TODO: Create staticstics and profile page
 
@@ -61,49 +62,10 @@ static void main_window_unload(Window *window) {
 	text_layer_destroy(s_output_layer);
 }
 
-static void menu_daily_window_load(Window *window) {
-}
-
-static void menu_stats_window_load(Window *window) {
-	Layer *window_layer = window_get_root_layer(window);
-	GRect window_bounds = layer_get_bounds(window_layer);
-	window_set_background_color(s_stats_window, GColorPurple);
-
-	s_stats_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
-	text_layer_set_font(s_stats_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
-	text_layer_set_background_color(s_stats_layer, GColorClear);
-	text_layer_set_text(s_stats_layer, "THIS IS THE STATS");
-	text_layer_set_text_alignment(s_stats_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
-	
-	layer_add_child(window_layer, text_layer_get_layer(s_stats_layer));
-}
-
-static void menu_stats_window_unload(Window *window) {
-	text_layer_destroy(s_stats_layer);
-}
-
-static void menu_profile_window_load(Window *window) {
-	Layer *window_layer = window_get_root_layer(window);
-	GRect window_bounds = layer_get_bounds(window_layer);
-	window_set_background_color(s_profile_window, GColorRed);
-
-	s_profile_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
-	text_layer_set_font(s_profile_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
-	text_layer_set_background_color(s_profile_layer, GColorClear);
-	text_layer_set_text(s_profile_layer, "THIS IS THE PROFILE");
-	text_layer_set_text_alignment(s_profile_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
-	
-	layer_add_child(window_layer, text_layer_get_layer(s_profile_layer));
-}
-
-static void menu_profile_window_unload(Window *window) {
-	text_layer_destroy(s_profile_layer);
-}
-
 /********************* APP *****************************/
 
 static void init() {
-	menu_time_of_day_up = gbitmap_create_with_resource(RESOURCE_ID_menu_daily_up);
+	s_menu_daily_up = gbitmap_create_with_resource(RESOURCE_ID_menu_daily_up);
 	s_menu_stats_select = gbitmap_create_with_resource(RESOURCE_ID_menu_stats_select);
 	s_menu_profile_down = gbitmap_create_with_resource(RESOURCE_ID_menu_profile_down);
 	
@@ -115,18 +77,6 @@ static void init() {
 	});
 	
 	window_stack_push(s_main_window, animated);
-	
-	s_stats_window = window_create();
-	window_set_window_handlers(s_stats_window, (WindowHandlers) {
-		.load = menu_stats_window_load,
-		.unload = menu_stats_window_unload,
-	});
-	
-	s_profile_window = window_create();
-	window_set_window_handlers(s_profile_window, (WindowHandlers) {
-		.load = menu_profile_window_load,
-		.unload = menu_profile_window_unload,
-	});
 }
 
 static void deinit() {

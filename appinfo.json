@@ -9,14 +9,14 @@
     "resources": {
         "media": [
             {
-                "file": "images/music_icon_ellipsis.png",
-                "name": "ELLIPSIS",
+                "file": "images/ellipsis.png",
+                "name": "ellipsis",
                 "targetPlatforms": null,
                 "type": "bitmap"
             },
             {
                 "file": "images/profile.png",
-                "name": "menu_settings_down",
+                "name": "menu_profile_down",
                 "targetPlatforms": null,
                 "type": "bitmap"
             },
