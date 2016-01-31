@@ -9,13 +9,19 @@
     "resources": {
         "media": [
             {
-                "file": "images/music_icon_ellipsis.png",
-                "name": "ELLIPSIS",
+                "file": "images/FACE.png",
+                "name": "FACE",
                 "targetPlatforms": null,
                 "type": "bitmap"
             },
             {
-                "file": "images/profile.png",
+                "file": "images/statistics.png",
+                "name": "menu_stats_select",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/settiings.png",
                 "name": "menu_settings_down",
                 "targetPlatforms": null,
                 "type": "bitmap"
@@ -23,12 +29,6 @@
             {
                 "file": "images/daily.png",
                 "name": "menu_daily_up",
-                "targetPlatforms": null,
-                "type": "bitmap"
-            },
-            {
-                "file": "images/statistics.png",
-                "name": "menu_stats_select",
                 "targetPlatforms": null,
                 "type": "bitmap"
             }
