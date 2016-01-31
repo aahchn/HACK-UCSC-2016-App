@@ -1,12 +1,14 @@
 #include <pebble.h>
 
-static Window *s_main_window;
-static TextLayer *s_output_layer;
+static Window *s_main_window, *s_progress_window;
+static TextLayer *s_output_layer, *s_progresss_layer;
 static ActionBarLayer *action_bar;
 static GBitmap *menu_daily_up, *menu_stats_select, *menu_settings_down;
+static const bool animated = true;
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   text_layer_set_text(s_output_layer, "Daily Progress");
+  window_stack_push(s_progress_window, animated);
 }
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -49,18 +51,43 @@ static void main_window_unload(Window *window) {
   text_layer_destroy(s_output_layer);
 }
 
+static void menu_window_load(Window *window) {
+  Layer *window_layer = window_get_root_layer(window);
+  GRect window_bounds = layer_get_bounds(window_layer);
+  window_set_background_color(s_progress_window, GColorCyan);
+
+  s_progresss_layer = text_layer_create(GRect(5, 0, window_bounds.size.w - 5, window_bounds.size.h));
+  text_layer_set_font(s_progresss_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
+  text_layer_set_background_color(s_progresss_layer, GColorClear);
+  text_layer_set_text(s_progresss_layer, "TEST a Button");
+  text_layer_set_text_alignment(s_progresss_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
+  
+  layer_add_child(window_layer, text_layer_get_layer(s_progresss_layer));
+}
+
+static void menu_window_unload(Window *window) {
+  text_layer_destroy(s_progresss_layer);
+}
+
 static void init() {
  menu_daily_up = gbitmap_create_with_resource(RESOURCE_ID_menu_daily_up);
  menu_stats_select = gbitmap_create_with_resource(RESOURCE_ID_menu_stats_select);
  menu_settings_down = gbitmap_create_with_resource(RESOURCE_ID_menu_settings_down);
   
   s_main_window = window_create();
+  window_set_click_config_provider(s_main_window, click_config_provider);
   window_set_window_handlers(s_main_window, (WindowHandlers) {
     .load = main_window_load,
-    .unload = main_window_unload
+    .unload = main_window_unload,
   });
-  window_set_click_config_provider(s_main_window, click_config_provider);
-  window_stack_push(s_main_window, true);
+  
+  window_stack_push(s_main_window, animated);
+  
+  s_progress_window = window_create();
+  window_set_window_handlers(s_progress_window, (WindowHandlers) {
+    .load = menu_window_load,
+    .unload = menu_window_unload,
+  });
 }
 
 static void deinit() {
