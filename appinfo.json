@@ -9,8 +9,14 @@
     "resources": {
         "media": [
             {
-                "file": "images/ellipsis.png",
-                "name": "ellipsis",
+                "file": "images/FACE.png",
+                "name": "MOAR",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/stats.png",
+                "name": "menu_stats_select",
                 "targetPlatforms": null,
                 "type": "bitmap"
             },
@@ -21,14 +27,14 @@
                 "type": "bitmap"
             },
             {
-                "file": "images/daily.png",
-                "name": "menu_daily_up",
+                "file": "images/ellipsis.png",
+                "name": "ellipsis",
                 "targetPlatforms": null,
                 "type": "bitmap"
             },
             {
-                "file": "images/stats.png",
-                "name": "menu_stats_select",
+                "file": "images/daily.png",
+                "name": "menu_daily_up",
                 "targetPlatforms": null,
                 "type": "bitmap"
             }

@@ -8,9 +8,9 @@
 
 static Window *s_main_window;
 static TextLayer *s_output_layer;
-
+static BitmapLayer *s_bitmap_layer;
 static ActionBarLayer *action_bar;
-static GBitmap *s_menu_daily_up, *s_menu_stats_select, *s_menu_profile_down;
+static GBitmap *s_menu_daily_up, *s_menu_stats_select, *s_menu_profile_down, *s_bitmap;
 
 static const bool animated = true;
 
@@ -41,6 +41,11 @@ static void main_window_load(Window *window) {
 	GRect window_bounds = layer_get_bounds(window_layer);
 	window_set_background_color(s_main_window, GColorMalachite);
 
+  s_bitmap = gbitmap_create_with_resource(RESOURCE_ID_MOAR);
+  s_bitmap_layer = bitmap_layer_create(window_bounds);
+  bitmap_layer_set_bitmap(s_bitmap_layer, s_bitmap);
+  bitmap_layer_set_compositing_mode(s_bitmap_layer, GCompOpSet);
+  
 	action_bar = action_bar_layer_create();
 	action_bar_layer_add_to_window(action_bar, s_main_window);
 	action_bar_layer_set_click_config_provider(action_bar, click_config_provider);
@@ -56,10 +61,12 @@ static void main_window_load(Window *window) {
 	text_layer_set_text_alignment(s_output_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
 	
 	layer_add_child(window_layer, text_layer_get_layer(s_output_layer));
+  layer_add_child(window_layer, bitmap_layer_get_layer(s_bitmap_layer));
 }
 
 static void main_window_unload(Window *window) {
 	text_layer_destroy(s_output_layer);
+  gbitmap_destroy(s_bitmap);
 }
 
 /********************* APP *****************************/
