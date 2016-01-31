@@ -1,15 +1,18 @@
 #include <pebble.h>
 
-static Window *s_main_window, *s_progress_window, *s_statistics_window, *s_settings_window;
-static TextLayer *s_output_layer, *s_progress_layer, *s_statistics_layer, *s_settings_layer;
+#include "windows/time_of_day.h"
+
+static Window *s_main_window, *s_statistics_window, *s_settings_window;
+static TextLayer *s_output_layer, *s_statistics_layer, *s_settings_layer;
 static ActionBarLayer *action_bar, *mood_select_bar;
 static GBitmap *menu_daily_up, *menu_stats_select, *menu_settings_down;
 static const bool animated = true;
 static GBitmap *s_ellipsis_bitmap;
 
+/********************* CLICKS *****************************/
+
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(s_output_layer, "Daily Progress");
-  window_stack_push(s_progress_window, animated);
+  time_of_day_window_push();
 }
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -22,8 +25,12 @@ static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
   window_stack_push(s_settings_window, animated);
 }
 
-static void mood_select_handler(ClickRecognizerRef recognizer, void *context) {
+static void mood_click_handler(ClickRecognizerRef recognizer, void *context) {
   text_layer_set_text(s_progress_layer, "TESTEEEE");
+}
+
+static void mood_click_provier(void *context) {
+  window_single_click_subscribe(BUTTON_ID_SELECT, mood_click_handler);
 }
 
 static void click_config_provider(void *context) {
@@ -31,6 +38,8 @@ static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
   window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
 }
+
+/********************* WINDOWS *****************************/
 
 static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
@@ -65,7 +74,7 @@ static void menu_progress_window_load(Window *window) {
   
   mood_select_bar = action_bar_layer_create();
   action_bar_layer_add_to_window(mood_select_bar, s_progress_window);
-  //action_bar_layer_set_click_config_provider(mood_select_bar, mood_select_handler);
+  //action_bar_layer_set_click_config_provider(mood_select_bar, mood_click_provider);
   
   action_bar_layer_set_icon_animated(mood_select_bar, BUTTON_ID_SELECT, s_ellipsis_bitmap, true);
 
@@ -118,6 +127,8 @@ static void menu_settings_window_unload(Window *window) {
   text_layer_destroy(s_settings_layer);
 }
 
+/********************* APP *****************************/
+
 static void init() {
  menu_daily_up = gbitmap_create_with_resource(RESOURCE_ID_menu_daily_up);
  menu_stats_select = gbitmap_create_with_resource(RESOURCE_ID_menu_stats_select);
@@ -134,6 +145,7 @@ static void init() {
   window_stack_push(s_main_window, animated);
   
   s_progress_window = window_create();
+  //window_set_click_config_provider(s_progress_window, mood_click_provider);
   window_set_window_handlers(s_progress_window, (WindowHandlers) {
     .load = menu_progress_window_load,
     .unload = menu_progress_window_unload,
