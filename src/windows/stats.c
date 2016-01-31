@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include "windows/time_of_day.h"
+#include "windows/stats.h"
 
 static Window *s_main_window;
 static MenuLayer *s_menu_layer;
@@ -18,7 +18,7 @@ static void window_load(Window *window) {
 	
 	text_layer_set_font(s_main_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
 	text_layer_set_background_color(s_main_layer, GColorClear);
-	text_layer_set_text(s_main_layer, "THIS IS THE STATS");
+	text_layer_set_text(s_main_layer, "THIS IS THE DAILY");
 	text_layer_set_text_alignment(s_main_layer, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft));
 	layer_add_child(window_layer, text_layer_get_layer(s_main_layer));
 	
@@ -43,7 +43,7 @@ static void window_unload(Window *window) {
   s_main_window = NULL;
 }
 
-void time_of_day_window_push() {
+void stats_window_push() {
   if(!s_main_window) {
     s_main_window = window_create();
     window_set_window_handlers(s_main_window, (WindowHandlers) {
